@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ruizhen Hu's Homepage - Services & Activities</title>
+<meta property="og:site_name" content="Ruizhen Hu&#39;s Homepage">
+<meta property="og:title" content="Services">
+<meta property="og:description" content="Services">
+
+
+<link rel="stylesheet" type="text/css" href="./group_files/main_style.css" title="wsite-theme-css">
+<script src="jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
+<style>
+	.member_card
+	{
+		border-radius: 10px;
+		/* box-shadow: 8px 14px 38px rgb(39 44 49 / 10%), 1px 3px 8px rgb(39 44 49 / 5%); */
+		/* box-shadow: 8px 14px 38px rgb(39 44 49 / 6%), 1px 3px 8px rgb(39 44 49 / 3%); */
+		transition: all .5s ease;
+		/* background-color: #e6e6f0; */
+		background-color: white;
+		/* display: block; */
+		width: 200px;
+	}
+
+	#link_card:hover, #link_card:focus {
+	/* 依次定义变换、阴影、阴影的动画  */
+	transform: scale(1.08);
+	box-shadow:  8px 14px 38px rgb(39 44 49 / 10%), 1px 3px 8px rgb(39 44 49 / 5%);
+	animation: glow 1500ms ease-out infinite alternate;
+	
+	-webkit-transform: scale(1.08);
+	-webkit-box-shadow:  8px 14px 38px rgb(39 44 49 / 10%), 1px 3px 8px rgb(39 44 49 / 5%);
+	-webkit-animation: glow 1500ms ease-out infinite alternate;
+	
+	outline: none;
+
+	}
+</style>
+</head>
+
+<body class="wsite-theme-light wsite-page-frequented-urls">
+
+<div id="wrapper">
+	<div id="header">
+		<div id="headerleft"><span class="wsite-logo"><table style="height:60px"><tbody><tr><td><a href="index.htm" style="position: relative; "><span id="wsite-title">Ruizhen Hu's Homepage</span></a></td></tr></tbody></table></span></div>
+		<div id="navigation">
+		  <ul>
+			  <li id="pg_home" style="position: relative; "><a href="index.htm" style="position: relative; ">Home</a></li>
+			  <li id="active" style="position: relative; "><a href="group.html" style="position: relative; ">Group</a></li>
+			  <li id="pg_pub" style="position: relative; "><a href="Publications.htm" style="position: relative; ">Publications</a></li>
+			  <li id="pg_link" style="position: relative; "><a href="Services.htm" style="position: relative; ">Services</a></li>
+		  </ul>
+		</div>
+	</div>
+
+	<div id="content">
+		<div id="wsite-content" class="wsite-not-footer"style="display:flex;    flex-direction: column;">
+			<div style="display: none">
+				<table class="wsite-multicol-table">
+					<tr class="wsite-multicol-tr" >
+						<td class="wsite-multicol-col" style="width:40%">
+							<div class="wsite-image wsite-image-border-none " style="text-align:center">
+								<img src="./group_files/images/people/group_2020.jpg" alt="图片" style="width:100%;max-width:500px">
+							</div>
+						</td>
+						<td class="wsite-multicol-col" style="width:60%;padding:0 15px 0 20px ;">
+							<div class="paragraph" style="text-align:left;">
+					  			The iGRAPE (Intelligent GRaphics And PErception) Lab targets top-tier Graphics and Vision research at the School of Computer, National University of Defense Technology. Our research interests focus on geometry processing and modeling, 3D vision, robotic manipulation and navigation, and especially on learning-based approaches to the problems. We are proud of our six faculties and many excellent PhD and Master students. Several excellent former students are in close collaboration with our group. A one-sentence summary of our research goal is: We try to close the loop of acquisition, processing, understanding and generation of 3D geometric data with data-driven approach (please refer to this survey for the concept of 'data-driven loop').
+					  			Our group is actively seeking for self-motivated and well-trained students to join.
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<br><br>
+			</div>
+
+			<div id="PhD">
+				<p class="title">PhD Students</p>
+
+				<table id="person_table_PhD" align="left" cellspacing="27">
+
+				</table>
+			</div>
+
+			<div id="Master">
+				<p class="title">Master Students</p>
+
+				<table id="person_table_Master" align="left" cellspacing="27">
+
+				</table>
+			</div>
+
+			<div id="Visiting">
+				<p class="title">Visiting Students</p>
+
+				<table id="person_table_Visiting" align="left" cellspacing="27">
+
+				</table>
+			</div>
+
+			<div id="Undergraduate">
+				<p class="title">Undergraduate Students</p>
+
+				<table id="person_table_Undergraduate" align="left" cellspacing="27">
+
+				</table>
+			</div>
+
+			<div id="Alumni">
+				<p class="title">Alumni</p>
+
+				<table id="person_table_Alumni" align="left" cellspacing="27">
+
+				</table>
+			</div>
+
+			<div id="Others">
+				<p class="title">Others</p>
+
+				<table id="person_table_others" align="left" cellspacing="27">
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+	//获取内容卡片
+	content = document.getElementById("content");
+
+	var member_count = [0,0,0,0,0,0];
+	var member_label = ["Others", "PhD", "Master", "Visiting", "Undergraduate", "Alumni"]
+	var card_research_direction_height=[];
+	//读取publications文件
+	$.ajax({
+		url: "group_files/group_member.csv",
+		success: function (result) {
+			var memberList = result.split("\n");
+			if(memberList[memberList.length - 1] == ""){
+				memberList.pop();
+			}
+
+			memberList.sort(function(x, y){
+				var member_x = x.split(",");
+				var name_x = member_x[1].split(" ");
+				var time_x = parseInt(member_x[6].substr(0,4));
+				if(member_x[0] == "Alumni"){
+					var tmp_x = member_x[5].split(" ");
+					time_x = -parseInt(tmp_x[tmp_x.length - 1].substr(0,4));
+				}
+
+
+				var member_y = y.split(",");
+				var name_y = member_y[1].split(" ");
+				var time_y = parseInt(member_y[6].substr(0,4));
+				if(member_y[0] == "Alumni"){
+					var tmp_y = member_x[5].split(" ");
+					time_y = -parseInt(tmp_y[tmp_y.length - 1].substr(0,4));
+				}
+
+				if(time_x == time_y){
+					if(name_x[1] > name_y[1])
+						return 1;
+					else
+						return -1;
+				}
+				else {
+					return time_x - time_y;
+				}
+			});
+
+			//Others, PhD, Master, Visiting, Undergraduate, Alumni
+			var table_list = [];
+			table_list.push(document.getElementById("person_table_others"));
+			table_list.push(document.getElementById("person_table_PhD"));
+			table_list.push(document.getElementById("person_table_Master"));
+			table_list.push(document.getElementById("person_table_Visiting"));
+			table_list.push(document.getElementById("person_table_Undergraduate"));
+			table_list.push(document.getElementById("person_table_Alumni"));
+
+			var tr_list = [];
+			tr_list.push(document.createElement("tr"));
+			tr_list.push(document.createElement("tr"));
+			tr_list.push(document.createElement("tr"));
+			tr_list.push(document.createElement("tr"));
+			tr_list.push(document.createElement("tr"));
+			tr_list.push(document.createElement("tr"));
+
+			for(var i=1; i < memberList.length; i++){
+				if(memberList[i].indexOf(",") == -1){
+					continue;
+				}
+				//0:Label
+				//1:Name
+				//2:Url
+				//3:Research Direction
+				//4:Co-supervised
+				//5:Graduate Time
+				//6:Admission Date
+				var curmember_ord = mySplit(memberList[i]);
+				var curmember = removeQuotation(curmember_ord);
+
+				var index = 0;
+				switch (curmember[0].toLocaleLowerCase()){
+					case "master-phd":
+					case "phd": index = 1; break;
+					case "master": index = 2; break;
+					case "visiting": index = 3; break;
+					case "undergraduate": index = 4; break;
+					case "alumni": index = 5; break;
+				}
+
+				var member_card = document.createElement("td");
+				member_card.className = "member_card";
+
+				var member_href = document.createElement("a");
+				if(curmember[2] != "/"){
+					member_href.setAttribute('href', curmember[2]);
+					member_card.id = "link_card";
+				}
+
+				var card_img_div = document.createElement("div");
+				card_img_div.className = "card_img_div";
+				var cur_name = curmember[1].toLocaleLowerCase().replace(" ","");
+				var cur_src = "./group_files/images/people/" + cur_name + ".jpg";
+				var card_img_div_info = "<img class=\"card_img\" alt=\"" + cur_name + "\" src=\"" + cur_src +"\">";
+				card_img_div.innerHTML = card_img_div_info;
+
+				member_href.appendChild(card_img_div);
+
+				var card_name = document.createElement("div");
+				card_name.className = "card_name";
+				card_name.append(curmember[1]);
+				member_href.appendChild(card_name);
+
+				var card_research_direction = document.createElement("div");
+				card_research_direction.className = "card_research_direction";
+				card_research_direction.append(curmember[3]);
+				card_research_direction.classList.add(member_label[index]+"_tr_"+(Math.floor(member_count[index] / 4)));
+				member_href.appendChild(card_research_direction);
+
+				var card_info = document.createElement("div");
+				card_info.className = "card_info";
+				if(curmember[5] == "/"){
+					//PhD started in 2019
+
+					var info = "";
+					if(index == 1){
+						info = curmember[0] + " started in " + curmember[6];
+					}else {
+						info = "Started in " + curmember[6];
+					}
+
+					card_info.append(info);
+				}
+				else {
+					card_info.append(curmember[5]);
+				}
+				member_href.appendChild(card_info);
+
+				if(curmember[4] != "/"){
+					var card_co_sup = document.createElement("div");
+					card_co_sup.className = "card_co_sup";
+					var info_2 = "Co-supervised with Prof. \n" + curmember[4];
+					card_co_sup.append(info_2);
+					member_href.appendChild(card_co_sup);
+				}
+
+				member_card.appendChild(member_href);
+
+				tr_list[index].appendChild(member_card);
+
+				member_count[index]++;
+				if(member_count[index] % 4 == 0){
+					tr_list[index].style.verticalAlign = "top";
+					tr_list[index].className = "member_tr";
+					table_list[index].appendChild(tr_list[index]);
+					tr_list[index] = document.createElement("tr");
+				}
+			}
+
+			for(var i=0;i<6;i++){
+				if(member_count[i] == 0){
+					var cur_table = document.getElementById(member_label[i]);
+					cur_table.style.display = "none";
+				}
+
+				tr_list[i].style.verticalAlign = "top";
+				tr_list[i].className = "member_tr";
+				table_list[i].appendChild(tr_list[i]);
+			}
+
+
+
+			for(var cur_label =0;cur_label<6;cur_label++)
+			{
+				for(var cur_member=0;cur_member<member_count[cur_label];cur_member++)
+				{
+					class_name='card_research_direction '
+					class_name+=(member_label[cur_label]+"_tr_"+(Math.floor(cur_member/ 4)))
+					var cur_member_tr=document.getElementsByClassName(class_name)
+					var max=0;
+					for(var i=0;i<cur_member_tr.length;i++)
+					{
+						if(max<cur_member_tr[i].clientHeight)
+							max=cur_member_tr[i].clientHeight;
+					}
+					for(var i=0;i<cur_member_tr.length;i++)
+					{
+						cur_member_tr[i].style.height=max+"px"
+					}
+				}
+				
+			}
+
+
+
+		}
+	})
+
+	$(document).ready(function(){
+		console.log("hello!");
+		for(var i=0; i<member_label.length; i++){
+			var line_num = Math.ceil(member_count[i] / 4);
+			for(var j=0; j<line_num; j++){
+				var class_name = member_label[i]+"_tr_" + j;
+				var direction_divs = document.getElementsByClassName(class_name);
+
+				console.log(class_name);
+				console.log(direction_divs);
+				console.log(direction_divs[0].getAttribute("height"));
+			}
+		}
+	})
+
+	function mySplit(str) {
+		var temp = str.replace(/"[^"]*"/g,  match => match.replace(/,/g, '{}'));
+		return temp.split(',')
+				.filter(value => value !== '')  //去除空值
+				.map(value => value.replace(/{}/g, ','));
+	}
+
+	function removeQuotation(str) {
+		var output = []
+		for(var i=0;i<str.length;i++){
+			var curstr = str[i].trim();
+			if(curstr.substr(0,1) == "\"" && curstr.substr(-1) == "\""){
+				curstr = curstr.substr(1);
+				curstr = curstr.substring(0,curstr.length-1);
+			}
+			output.push(curstr);
+		}
+
+		return output;
+	}
+</script>

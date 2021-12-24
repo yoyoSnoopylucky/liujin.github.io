@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Ruizhen Hu's Homepage - Services & Activities</title>
+	<meta property="og:site_name" content="Ruizhen Hu&#39;s Homepage">
+	<meta property="og:title" content="Services">
+	<meta property="og:description" content="Services">
+
+
+	<link rel="stylesheet" type="text/css" href="./Services_files/main_style.css" title="wsite-theme-css">
+	<script src="jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="wsite-theme-light wsite-page-frequented-urls">
+<div id="wrapper">
+	<div id="header">
+		<div id="headerleft"><span class="wsite-logo"><table style="height:60px"><tbody><tr><td><a href="index.htm" style="position: relative; "><span id="wsite-title">Ruizhen Hu's Homepage</span></a></td></tr></tbody></table></span></div>
+		<div id="navigation">
+			<ul>
+				<li id="pg_home" style="position: relative; "><a href="index.htm" style="position: relative; ">Home</a></li>
+				<li id="pg_group" style="position: relative; "><a href="group.html" style="position: relative; ">Group</a></li>
+				<li id="pg_pub" style="position: relative; "><a href="Publications.htm" style="position: relative; ">Publications</a></li>
+				<li id="active" style="position: relative;"><a href="Services.htm" style="position: relative; ">Services</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="content">
+		<div id="wsite-content" class="wsite-not-footer">
+
+			<!--1-->
+			<div class="paragraph">
+				<strong>Journal editorial board:</strong><br>
+				<ul id="Journal_editorial_board_ul">
+
+				</ul>
+			</div>
+			<hr class="hr.styled-hr"><br>
+
+
+			<!--2-->
+			<div class="paragraph">
+				<strong >Program committee co-chair:</strong><br>
+				<ul id="Program_committee_co_chair_ul">
+
+				</ul>
+			</div>
+			<hr class="hr.styled-hr"><br>
+
+
+			<!--3-->
+			<div class="paragraph">
+				<strong >Program committee member:</strong><br>
+				<ul id="Program_committee_member_ul">
+				</ul>
+			</div>
+			<hr class="hr.styled-hr"><br>
+
+
+			<!--4-->
+			<div class="paragraph">
+				<strong >Reviewer for journals:</strong><br>
+				<ul id="Reviewer_for_journals_ul">
+
+				</ul>
+			</div>
+			<hr class="hr.styled-hr"><br>
+
+
+			<!--5-->
+			<div class="paragraph">
+				<strong >Reviewer for conferences</strong><br>
+				<ul id="Reviewer_for_conferences_ul">
+				</ul>
+			</div>
+			<hr class="hr.styled-hr" style="display: none"><br>
+
+
+			<!--6-->
+			<div class="paragraph" style="display: none">
+				<strong >Invited talks</strong><br>
+				<ul id="Invited_talks_ul">
+				</ul>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+	//获取内容卡片
+	Journal_editorial_board_ul = document.getElementById("Journal_editorial_board_ul");
+
+	//读取Journal editorial board.csv文件
+	$.ajax({
+		url:"Services_files/data/Journal editorial board.csv",
+		success: function(result){
+			Journal_editorial_board_List = result.split("\n");
+			for(var i=1; i < Journal_editorial_board_List.length; i++){
+				if(Journal_editorial_board_List[i].indexOf(",") == -1){
+					continue;
+				}
+				console.log(i)
+				curList = Journal_editorial_board_List[i].split(",");
+
+				li = document.createElement("li");
+				content="";
+				if(curList[1]!='/')
+				{
+					content+=("<a href=\""+curList[1]+"\" target=\"_blank\"> "+curList[0]+" </a>");
+				}
+				else
+					content+=curList[0];
+				if(curList[2]!='/')
+				{
+					content+="("+curList[2]+"),";
+				}
+				if(curList[3]!='/')
+				{
+					content+=" "+curList[3]+":";
+				}
+				if(curList[4]!='/')
+				{
+					content+=" "+curList[4]+" <br>";
+				}
+				li.innerHTML=content;
+				Journal_editorial_board_ul.appendChild(li);
+			}
+		}
+	});
+
+
+	Program_committee_co_chair_ul = document.getElementById("Program_committee_co_chair_ul");
+	//读取Program committee co-chair.csv文件
+	$.ajax({
+		url:"Services_files/data/Program committee co-chair.csv",
+		success: function(result){
+			Program_committee_co_chair_List = result.split("\n");
+			for(var i=1; i < Program_committee_co_chair_List.length; i++){
+				if(Program_committee_co_chair_List[i].indexOf(",") == -1){
+					continue;
+				}
+				console.log(i)
+				curList = Program_committee_co_chair_List[i].split(",");
+
+				li = document.createElement("li");
+				content="";
+				if(curList[1]!='/')
+				{
+					content+=("<a href=\""+curList[1]+"\" target=\"_blank\"> "+curList[0]+" </a><br>");
+				}
+				else
+					content+=curList[0];
+
+				li.innerHTML=content;
+				Program_committee_co_chair_ul.appendChild(li);
+			}
+		}
+	});
+
+
+	//获取内容卡片
+	Program_committee_member_ul = document.getElementById("Program_committee_member_ul");
+
+	//读取Program committee member.csv文件
+	$.ajax({
+		url:"Services_files/data/Program committee member.csv",
+		success: function(result){
+			Program_committee_member_List = result.split("\n");
+			for(var i=1; i < Program_committee_member_List.length; i++){
+				if(curList[0]==""||curList[0]=="/")
+					continue;
+
+				if(Program_committee_member_List[i].indexOf(",") == -1){
+					continue;
+				}
+				console.log(i)
+				curList = Program_committee_member_List[i].split(",");
+
+				li = document.createElement("li");
+				content="";
+
+				content+=curList[0]+": "
+				if(curList[1]==""||curList[1]=="/")
+					continue;
+				if(curList[2]!='/')
+				{
+					content+=("<a href=\""+curList[2]+"\" target=\"_blank\"> "+curList[1]+"</a>");
+				}
+				else
+					content+=curList[1];
+
+				for(var z=3;z<curList.length-1;z+=2)
+				{
+					if(curList[z]==""||curList[z]=="/")
+						continue;
+					if(curList[z+1]!='/')
+						content+=(",<a href=\""+curList[z+1]+"\" target=\"_blank\"> "+curList[z]+" </a>");
+					else
+						content+=", "+curList[z];
+				}
+				content+="<br>";
+
+				li.innerHTML=content;
+				Program_committee_member_ul.appendChild(li);
+			}
+		}
+	});
+
+	//获取内容卡片
+	Reviewer_for_journals_ul = document.getElementById("Reviewer_for_journals_ul");
+
+	//读取Journal editorial board.csv文件
+	$.ajax({
+		url:"Services_files/data/Reviewer for journals.csv",
+		success: function(result){
+			Reviewer_for_journals_List = result.split("\n");
+			for(var i=1; i < Reviewer_for_journals_List.length; i++){
+				if(Reviewer_for_journals_List[i].indexOf(",") == -1){
+					continue;
+				}
+				console.log(i)
+				curList = Reviewer_for_journals_List[i].split(",");
+
+				li = document.createElement("li");
+				content="";
+				if(curList[1]!='/')
+				{
+					content+=("<a href=\""+curList[1]+"\" target=\"_blank\"> "+curList[0]+" </a>");
+				}
+				else
+					content+=curList[0];
+				content+="<br>";
+
+				li.innerHTML=content;
+				Reviewer_for_journals_ul.appendChild(li);
+			}
+		}
+	});
+
+
+
+	//获取内容卡片
+	Reviewer_for_conferences_ul = document.getElementById("Reviewer_for_conferences_ul");
+
+	//读取Reviewer for conferences.csv文件
+	$.ajax({
+		url:"Services_files/data/Reviewer for conferences.csv",
+		success: function(result){
+			Reviewer_for_conferences_List = result.split("\n");
+			for(var i=1; i < Reviewer_for_conferences_List.length; i++){
+				if(Reviewer_for_conferences_List[i].indexOf(",") == -1){
+					continue;
+				}
+				console.log(i)
+				curList = Reviewer_for_conferences_List[i].split(",");
+
+				li = document.createElement("li");
+				content=curList[0]+"<br>";
+
+				li.innerHTML=content;
+				Reviewer_for_conferences_ul.appendChild(li);
+			}
+		}
+	});
+
+
+	//获取内容卡片
+	Invited_talks_ul = document.getElementById("Invited_talks_ul");
+	//读取Invited talks.csv文件
+	$.ajax({
+		url:"Services_files/data/Invited talks.csv",
+		success: function(result){
+			Invited_talks_List = result.split("\n");
+			for(var i=1; i < Invited_talks_List.length; i++){
+				if(Invited_talks_List[i].indexOf(",") == -1){
+					continue;
+				}
+				console.log(i)
+				curList = Invited_talks_List[i].split(",");
+				li = document.createElement("li");
+				content="";
+				content+=curList[0];
+				if(curList[2]!='/')
+				{
+					content+=(",<a href=\""+curList[2]+"\" target=\"_blank\">"+curList[1]+"</a>");
+				}
+				else
+					content+=","+curList[1];
+
+				if(curList[3]!='/')
+				{
+					content+=","+curList[3];
+				}
+				if(curList[4]!='/')
+				{
+					content+=","+curList[4];
+				}
+				if(curList[5]!='/')
+				{
+					content+=","+curList[5];
+				}
+				content = content.substr(0,content.length-1);
+
+				content+=".<br>";
+				li.innerHTML=content;
+				Invited_talks_ul.appendChild(li);
+			}
+		}
+	});
+
+</script>

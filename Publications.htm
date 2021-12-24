@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Ruizhen Hu's Homepage - Publications</title>
+    <meta property="og:site_name" content="Ruizhen Hu&#39;s Homepage">
+    <meta property="og:title" content="Publications">
+    <meta property="og:description" content="Ruizhen Hu Publications">
+    <meta name="og:keywords" content="Ruizhen Hu Publications">
+
+
+    <link rel="stylesheet" type="text/css" href="./Publications_files/main_style.css" title="wsite-theme-css">
+</head>
+
+<script src="jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
+
+<body class="wsite-theme-light wsite-page-publications">
+<div id="wrapper">
+    <div id="header">
+        <div id="headerleft"><span class="wsite-logo"><table style="height:60px"><tbody><tr><td><a href="index.htm" style="position: relative; "><span id="wsite-title">Ruizhen Hu's Homepage</span></a></td></tr></tbody></table></span></div>
+        <div id="navigation">
+            <ul>
+                <li id="pg_home" style="position: relative; "><a href="index.htm" style="position: relative; ">Home</a></li>
+                <li id="pg_group" style="position: relative; "><a href="group.html" style="position: relative; ">Group</a></li>
+                <li id="active" style="position: relative;"><a href="Publications.htm" style="position: relative; ">Publications</a></li>
+                <li id="pg_link" style="position: relative; "><a href="Services.htm" style="position: relative; ">Services</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="content"></div>
+
+    <div id="extra-container" class="extra-container" style="display: none">
+        <div class="toc animated-visibility">
+            <div class="toc-content">
+                <center class="contents_style">contents</center>
+                <ul id="extra_content">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    var x=window.screen.width;
+    div = document.getElementById("extra-container");
+    con = document.getElementById("wrapper");
+    res=$(document.body).width()-div.offsetWidth-($(document.body).width()/x-1)*x/500*div.offsetWidth;
+    div.style.left=res+'px';
+
+    window.onresize = function(){
+        div = document.getElementById("extra-container");
+        con = document.getElementById("wrapper");
+        res=$(document.body).width()-div.offsetWidth-($(document.body).width()/x-1)*x/500*div.offsetWidth;
+        div.style.left=res+'px';
+    }
+
+
+    //获取内容卡片
+    content = document.getElementById("content");
+
+    //读取publications文件
+    $.ajax({
+        url:"Publications_files/publications.csv",
+        success: function(result){
+
+            year = 0;
+            table = null;
+            publicationList = result.split("\n");
+            publicationList.sort(function(x, y){
+                return parseInt(y.substr(0,4))-parseInt(x.substr(0,4));
+            });
+
+            //每条记录详情
+            //0：发表年份
+            //1,2：论文文件夹，论文图片
+            //3,4：作者，作者链接
+            //5：论文题目
+            //6,7：发表期刊，补充信息
+            //8：论文首页
+            //9,10：论文下载链接1，文章大小
+            //11,12：论文下载链接2，文章大小
+            //13,14：补充材料链接，内容大小
+            //15,16：数据集链接，内容大小
+            //17,18：code链接，内容大小
+            //19,20：课程链接
+            //21,22：slides链接，内容大小
+            //23：bibtex链接
+            //24：论文介绍
+
+            //逐个publication添加
+            for(var i=1; i < publicationList.length; i++){
+                if(publicationList[i].indexOf(",") == -1){
+                    continue;
+                }
+                console.log(i)
+                curPublication = mySplit(publicationList[i]);
+                console.log(curPublication.length);
+
+                //判断是否是新年份，如果是则新建Year_label
+                curYear = parseInt(curPublication[0]);
+                if(curYear != year){
+                    if(table != null){
+                        content.appendChild(table);
+                    }
+
+                    table = document.createElement("table");
+                    table.className = curYear.toString();
+
+                    year_label_tr = document.createElement("tr");
+                    year_label_tr.className = "year_label_tr";
+
+                    year_label_td = document.createElement("td");
+                    year_label_td.className = "year_label_td_" + curYear.toString();
+                    year_label_td.style.width = "23%";
+                    year_label_td.style.padding = "0 15px";
+
+                    info = "<p><strong><font size=\"4\" color=\"#6666cc\"><a style=\"text-decoration:none;\" name=\""+curYear.toString()+"\">" + curYear.toString() + "</a></font></strong></p>";
+                    year_label_td.innerHTML = info;
+
+                    year_label_tr.appendChild(year_label_td);
+                    table.appendChild(year_label_tr);
+
+                    year = curYear;
+
+
+                    extra_content = document.getElementById("extra_content");
+                    year_link_li=document.createElement("li");
+                    year_link_li.innerHTML="<a class=\"content_link\" href=\"#"+curYear.toString()+"\">" + curYear.toString() + "</a>";
+                    extra_content.appendChild(year_link_li);
+
+
+
+                }
+
+                //插入publication
+                publication = document.createElement("tr");
+                publication.className = "publication";
+
+
+
+                //插入图片
+                publication_image_td = document.createElement("td");
+                publication_image_td.className = "publication_image_td";
+                publication_image_td.style.width = "23%";
+                publication_image_td.style.padding = "0 15px";
+
+                publication_image_div = document.createElement("div");
+                publication_image_div.className = "publication_image_div";
+                publication_image_div.style.paddingTop = "10px";
+                publication_image_div.style.paddingBottom = "25px";
+                publication_image_div.style.marginLeft = "0";
+                publication_image_div.style.marginRight = "0";
+                publication_image_div.style.textAlign = "center";
+
+                image =  "<img src=\"projects/" +  curPublication[1] + "/" + curPublication[2] + "\" alt=\"图片\" style=\"width:100%;max-width:334px\">";
+                publication_image_div.innerHTML = image;
+
+                publication_image_td.appendChild(publication_image_div);
+                publication.appendChild(publication_image_td);
+
+                //插入论文介绍
+                publication_intro_td = document.createElement("td");
+                publication_intro_td.className = "publication_intro_td";
+                publication_intro_td.style.width = "77%";
+                publication_intro_td.style.padding = "0 15px";
+
+                introduction = document.createElement("div");
+                introduction.className = "paragraph";
+                introduction.style.textAlign = "left";
+
+                intro_info = generateAuthors(curPublication[3], curPublication[4]);
+                intro_info += "<strong>\"" + curPublication[5] + "\"</strong>, ";
+                intro_info += "<em>" + curPublication[6] + "</em> ";
+
+                if(curPublication[7] != "/"){
+                    if(curPublication[7].substr(0,1) == "\"" && curPublication[7].substr(-1) == "\""){
+                        curPublication[7] = curPublication[7].substr(1);
+                        curPublication[7] = curPublication[7].substring(0,curPublication[7].length-1);
+                    }
+                    //如果补充信息只有年份或者前面没有括号，在上一部分后面加个逗号
+                    if(curPublication[7].length==4||curPublication[7][0]!="(")
+                    {
+                        intro_info=intro_info.substr(0,intro_info.length-1);
+                        intro_info += ", " + curPublication[7] + ". ";
+                    }
+                    else
+                        intro_info += " " + curPublication[7] + ". ";
+                }
+
+                materials = 0;
+                intro_info += "[";
+                if(curPublication[8] != "/"){
+                    intro_info += "<a href=\"" + curPublication[8] + "\">Project page</a> |";
+                    materials++;
+                }
+                if(curPublication[9] != "/"){
+                    if(materials != 0)
+                        intro_info += " ";
+                    if(curPublication[11] != "/"){
+                        tag_1 = "PDF (high-res: " + curPublication[10] + ")";
+                        tag_2 = "PDF (low-res: " + curPublication[12] + ")";
+
+                        intro_info += "<a href=\"" + curPublication[9] + "\">" + tag_1 + "</a> |";
+                        intro_info += "<a href=\"" + curPublication[11] + "\">" + tag_2 + "</a> |";
+                    }else {
+                        if(curPublication[10] != "/")
+                            tag = "PDF (" + curPublication[10] + ")";
+                        else
+                            tag = "PDF";
+                        intro_info += "<a href=\"" + curPublication[9] + "\">" + tag + "</a> |";
+                    }
+                    materials++;
+                }
+                if(curPublication[13] != "/"){
+                    tag = "Supplementary material (" + curPublication[14] + ")";
+                    intro_info += " <a href=\"" + curPublication[13] + "\">" + tag + "</a> |";
+                    materials++;
+                }
+                if(curPublication[15] != "/"){
+                    tag = "Dataset (" + curPublication[16] + ")";
+                    intro_info += " <a href=\"" + curPublication[15] + "\">" + tag + "</a> |";
+                    materials++;
+                }
+                if(curPublication[17] != "/"){
+                    if(curPublication[18] != "/")
+                        tag = "Source Code (" + curPublication[18] + ")";
+                    else
+                        tag = "Source Code";
+                    intro_info += " <a href=\"" + curPublication[17] + "\">" + tag + "</a> |";
+                    materials++;
+                }
+                if(curPublication[19] != "/"){
+                    tag = "Course page";
+                    intro_info += " <a href=\"" + curPublication[19] + "\">" + tag + "</a> |";
+                    materials++;
+                }
+                if(curPublication[20] != "/"){
+                    if(curPublication[21] != "/")
+                        tag = "Course note (" + curPublication[21] + ")";
+                    else
+                        tag = "Course note";
+                    intro_info += " <a href=\"" + curPublication[20] + "\">" + tag + "</a> |";
+                    materials++;
+                }
+                if(curPublication[22] != "/"){
+                    tag = "Slides (" + curPublication[23] + ")";
+                    intro_info += " <a href=\"" + curPublication[22] + "\">" + tag + "</a> |";
+                    materials++;
+                }
+                if(curPublication[24] != "/"){
+                    intro_info += " <a href=\"" + curPublication[24] + "\">bibtex</a> |";
+                    materials++;
+                }
+
+                intro_info = intro_info.substr(0, intro_info.length-2);
+                if(materials != 0){
+                    intro_info += "]";
+                }
+
+                intro_info += "<br><br>";
+
+                //filePath = "projects/" + curPublication[1] + "/introduction.txt";
+                //promiseObj = generatePaperIntroduction(filePath);
+
+                intro_info += "<p>";
+                console.log(curPublication[25]);
+                message = curPublication[25].trim();
+                message = message.replace(new RegExp("\"\"","gm"),"\"");
+                if(message != ""){
+
+                    if(message.substr(0,1) == "\"" && message.substr(-1) == "\""){
+                        message = message.substr(1);
+                        message = message.substring(0,message.length-1);
+                    }
+                    intro_info += message;
+                    intro_info += "</p><br>";
+                }
+
+                introduction.innerHTML = intro_info;
+
+                publication_intro_td.appendChild(introduction);
+                publication.appendChild(publication_intro_td);
+
+                table.appendChild(publication);
+            }
+
+            content.appendChild(table);
+
+        }
+
+    });
+
+    function generateAuthors(authorNameStr, authorLinkStr){
+        if(authorNameStr.substr(0,1) == "\"" && authorNameStr.substr(-1) == "\""){
+            authorNameStr = authorNameStr.substr(1);
+            authorNameStr = authorNameStr.substring(0,authorNameStr.length-1);
+        }
+
+        if(authorLinkStr.substr(0,1) == "\"" && authorLinkStr.substr(-1) == "\""){
+            authorLinkStr = authorLinkStr.substr(1);
+            authorLinkStr = authorLinkStr.substring(0,authorLinkStr.length-1);
+        }
+
+        names = authorNameStr.split(",");
+        links = authorLinkStr.split(",");
+
+        output = "";
+        k = 0;
+
+        for(var ind=0;ind<names.length;ind++){
+            curName = names[ind].trim();
+
+            if(curName == "Ruizhen Hu" || curName == "Ruizhen Hu*"){
+                output += "<strong>" + curName + "</strong>";
+            }
+            else if(curName.substr(curName.length-1,1) == "0"){
+                output += "<a href=\"" + links[k] + "\">" + curName.substr(0, curName.length-1) + "</a>";
+                k++;
+            }
+            else{
+                output += curName;
+            }
+
+            if(ind == names.length - 2){
+                output += " and "
+            }
+            else{
+                output += ", "
+            }
+        }
+
+        return output;
+    }
+
+    async function generatePaperIntroduction(filePath){
+        var introduction = await readTxt(filePath);
+        return introduction;
+    }
+
+    function readTxt(filePath){
+        return new Promise(function(resolve){
+            $.ajax({
+                url: filePath,
+                success: function (result) {
+                    resolve(result);
+                }
+            })
+        });
+    }
+
+    function mySplit(str) {
+        var temp = str.replace(/"[^"]*"/g,  match => match.replace(/,/g, '{}'));
+        return temp.split(',')
+            .filter(value => value !== '')  //去除空值
+            .map(value => value.replace(/{}/g, ','));
+    }
+
+
+
+</script>
